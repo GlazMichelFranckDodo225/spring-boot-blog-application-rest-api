@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,5 +34,14 @@ public class PostController {
         return ResponseEntity
                 .ok()
                 .body(postService.getAllPosts());
+    }
+
+    // Get Post By Id REST API
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDtoResponse> getPostById(
+            @PathVariable("id") Long postDtoRequestId
+    ) {
+        return ResponseEntity
+                .ok(postService.getPostById(postDtoRequestId));
     }
 }

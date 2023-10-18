@@ -1,5 +1,6 @@
 package com.dgmf.service.impl;
 
+import com.dgmf.exception.ResourceNotFoundException;
 import com.dgmf.web.dto.PostDtoRequest;
 import com.dgmf.web.dto.PostDtoResponse;
 import com.dgmf.entity.Post;
@@ -47,6 +48,23 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
 
         return postDtoResponses;
+    }
+
+    @Override
+    public PostDtoResponse getPostById(Long postDtoRequestId) {
+        Post post = postRepository
+                .findById(postDtoRequestId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "Post",
+                                "Id",
+                                postDtoRequestId
+                        )
+                );
+
+        PostDtoResponse postDtoResponse = mapEntityToDto(post);
+
+        return postDtoResponse;
     }
 
     private PostDtoResponse mapEntityToDto(Post post) {
