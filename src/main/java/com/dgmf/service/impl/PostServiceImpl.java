@@ -1,16 +1,13 @@
 package com.dgmf.service.impl;
 
 import com.dgmf.exception.ResourceNotFoundException;
-import com.dgmf.web.dto.PostDtoRequest;
-import com.dgmf.web.dto.PostDtoResponse;
 import com.dgmf.entity.Post;
 import com.dgmf.repository.PostRepository;
 import com.dgmf.service.PostService;
+import com.dgmf.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,66 +22,89 @@ public class PostServiceImpl implements PostService {
     }*/
 
     @Override
-    public PostDtoResponse createPost(PostDtoRequest postDtoRequest) {
-        // Convert PostDtoRequest to Post
-        Post post = mapDtoToEntity(postDtoRequest);
+    public PostDto createPost(PostDto postDto) {
+        // Convert PostDto to Post
+        Post post = mapDtoToEntity(postDto);
 
         // Save Post
         Post savedPost = postRepository.save(post);
 
-        // Convert savedPost to PostDtoResponse
-        PostDtoResponse postDtoResponse = mapEntityToDto(savedPost);
+        // Convert savedPost to PostDto
+        PostDto savedPostDto = mapEntityToDto(savedPost);
 
-        return postDtoResponse;
+        return savedPostDto;
     }
 
     @Override
-    public List<PostDtoResponse> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();
 
-        // Convert List of Post to List of PostDtoRequest
-        List<PostDtoResponse> postDtoResponses = posts.stream()
+        // Convert List of Post to List of PostDto
+        List<PostDto> postDtos = posts.stream()
                 .map(post -> mapEntityToDto(post))
                 .collect(Collectors.toList());
 
-        return postDtoResponses;
+        return postDtos;
     }
 
     @Override
-    public PostDtoResponse getPostById(Long postDtoRequestId) {
+    public PostDto getPostById(Long postDtoId) {
+        // Get Post By Id from the Database
         Post post = postRepository
-                .findById(postDtoRequestId)
+                .findById(postDtoId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(
                                 "Post",
                                 "Id",
-                                postDtoRequestId
+                                postDtoId
                         )
                 );
 
-        PostDtoResponse postDtoResponse = mapEntityToDto(post);
+        PostDto postDto = mapEntityToDto(post);
 
-        return postDtoResponse;
+        return postDto;
     }
 
-    private PostDtoResponse mapEntityToDto(Post post) {
-        // Convert Post into PostDtoResponse
-        PostDtoResponse postDtoResponse = PostDtoResponse.builder()
+    @Override
+    public PostDto updatePost(PostDto postDto, Long postId) {
+        // Get Post By Id from the Database
+        Post existingPost = postRepository
+                .findById(postId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "Post",
+                                "Id",
+                                postId
+                        )
+                );
+
+        existingPost.setTitle(postDto.getTitle());
+        existingPost.setDescription(postDto.getDescription());
+        existingPost.setContent(postDto.getContent());
+
+        Post updatedPost = postRepository.save(existingPost);
+
+        return mapEntityToDto(updatedPost);
+    }
+
+    private PostDto mapEntityToDto(Post post) {
+        // Convert Post into PostDto
+        PostDto postDto = PostDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .content(post.getContent())
                 .build();
 
-        return postDtoResponse;
+        return postDto;
     }
 
-    private Post mapDtoToEntity(PostDtoRequest postDtoRequest) {
-        // Convert PostDtoRequest to Post
+    private Post mapDtoToEntity(PostDto postDto) {
+        // Convert PostDto to Post
         Post post = Post.builder()
-                .title(postDtoRequest.getTitle())
-                .description(postDtoRequest.getDescription())
-                .content(postDtoRequest.getContent())
+                .title(postDto.getTitle())
+                .description(postDto.getDescription())
+                .content(postDto.getContent())
                 .build();
 
         return post;

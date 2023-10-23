@@ -1,13 +1,14 @@
 package com.dgmf.service;
 
-import com.dgmf.web.dto.PostDtoRequest;
-import com.dgmf.web.dto.PostDtoResponse;
+import com.dgmf.entity.Post;
+import com.dgmf.web.dto.PostDto;
 
 import java.util.List;
 
 public interface PostService {
-    PostDtoResponse createPost(PostDtoRequest postDtoRequest);
-    List<PostDtoResponse> getAllPosts();
+    PostDto createPost(PostDto postDto);
+    List<PostDto> getAllPosts();
 
-    PostDtoResponse getPostById(Long postDtoRequestId);
+    PostDto getPostById(Long postId);
+    PostDto updatePost(PostDto postDto, Long postId);
 }

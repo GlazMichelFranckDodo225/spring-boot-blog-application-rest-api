@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class PostDtoResponse {
+public class PostDto {
     private Long id;
     private String title;
     private String description;

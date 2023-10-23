@@ -1,8 +1,7 @@
 package com.dgmf.web.controller;
 
-import com.dgmf.web.dto.PostDtoRequest;
-import com.dgmf.web.dto.PostDtoResponse;
 import com.dgmf.service.PostService;
+import com.dgmf.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +18,18 @@ public class PostController {
 
     // Create Post REST API
     @PostMapping
-    public ResponseEntity<PostDtoResponse> createPost(
-            @RequestBody PostDtoRequest postDtoRequest
+    public ResponseEntity<PostDto> createPost(
+            @RequestBody PostDto postDto
     ) {
         return new ResponseEntity<>(
-                postService.createPost(postDtoRequest),
+                postService.createPost(postDto),
                 HttpStatus.CREATED
         );
     }
 
     // Get All Posts REST API
     @GetMapping
-    public ResponseEntity<List<PostDtoResponse>> getAllPosts() {
+    public ResponseEntity<List<PostDto>> getAllPosts() {
         return ResponseEntity
                 .ok()
                 .body(postService.getAllPosts());
@@ -38,10 +37,19 @@ public class PostController {
 
     // Get Post By Id REST API
     @GetMapping("/{id}")
-    public ResponseEntity<PostDtoResponse> getPostById(
-            @PathVariable("id") Long postDtoRequestId
+    public ResponseEntity<PostDto> getPostById(
+            @PathVariable("id") Long postDtoId
     ) {
         return ResponseEntity
-                .ok(postService.getPostById(postDtoRequestId));
+                .ok(postService.getPostById(postDtoId));
+    }
+
+    // Update Post By Id REST API
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDto> updatePost(
+            @RequestBody PostDto postDto,
+            @PathVariable("id") Long postDtoId
+        ) {
+        return ResponseEntity.ok(postService.updatePost(postDto, postDtoId));
     }
 }
