@@ -52,4 +52,13 @@ public class PostController {
         ) {
         return ResponseEntity.ok(postService.updatePost(postDto, postDtoId));
     }
+
+    // Delete Post By Id REST API
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePostById(
+            @PathVariable("id") Long postId) {
+        postService.deletePostById(postId);
+
+        return ResponseEntity.ok("Post Entity Deleted Successfully");
+    }
 }
