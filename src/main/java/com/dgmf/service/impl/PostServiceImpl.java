@@ -6,6 +6,9 @@ import com.dgmf.repository.PostRepository;
 import com.dgmf.service.PostService;
 import com.dgmf.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,8 +39,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+        // Create Pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Post> pageOfPosts = postRepository.findAll(pageable);
+
+        // Get Content for Page Object
+        List<Post> posts = pageOfPosts.getContent();
 
         // Convert List of Post to List of PostDto
         List<PostDto> postDtos = posts.stream()

@@ -29,10 +29,21 @@ public class PostController {
 
     // Get All Posts REST API
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAllPosts() {
+    public ResponseEntity<List<PostDto>> getAllPosts(
+            @RequestParam(
+                    value = "pageNo",
+                    defaultValue = "0",
+                    required = false
+            ) int pageNo,
+            @RequestParam(
+                    value = "pageSize",
+                    defaultValue = "10",
+                    required = false
+            ) int pageSize
+    ) {
         return ResponseEntity
                 .ok()
-                .body(postService.getAllPosts());
+                .body(postService.getAllPosts(pageNo, pageSize));
     }
 
     // Get Post By Id REST API

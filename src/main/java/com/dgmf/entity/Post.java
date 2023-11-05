@@ -15,13 +15,25 @@ import java.time.LocalDateTime;
 @Table(
         name = "posts",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"title"})
+                @UniqueConstraint(
+                        name = "title_unique", // Entity Attribute name
+                        columnNames = "title" // DB Column name
+                )
         }
 )
 public class Post {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "posts_generator"
+    )
+    @SequenceGenerator(
+            name = "posts_generator",
+            sequenceName = "posts_sequence_name",
+            allocationSize = 1
+    )
     private Long id;
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false, length = 50)
     private String title;
     @Column(nullable = false)
     private String description;
