@@ -2,6 +2,7 @@ package com.dgmf.web.controller;
 
 import com.dgmf.service.PostService;
 import com.dgmf.web.dto.PostDto;
+import com.dgmf.web.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 public class PostController {
@@ -29,7 +30,7 @@ public class PostController {
 
     // Get All Posts REST API
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAllPosts(
+    public PostResponse getAllPosts(
             @RequestParam(
                     value = "pageNo",
                     defaultValue = "0",
@@ -41,9 +42,7 @@ public class PostController {
                     required = false
             ) int pageSize
     ) {
-        return ResponseEntity
-                .ok()
-                .body(postService.getAllPosts(pageNo, pageSize));
+        return postService.getAllPosts(pageNo, pageSize);
     }
 
     // Get Post By Id REST API

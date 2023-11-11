@@ -5,6 +5,7 @@ import com.dgmf.entity.Post;
 import com.dgmf.repository.PostRepository;
 import com.dgmf.service.PostService;
 import com.dgmf.web.dto.PostDto;
+import com.dgmf.web.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,21 +40,30 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+    public PostResponse getAllPosts(int pageNo, int pageSize) {
         // Create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-        Page<Post> pageOfPosts = postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findAll(pageable);
 
         // Get Content for Page Object
-        List<Post> posts = pageOfPosts.getContent();
+        List<Post> listOfPosts = posts.getContent();
 
         // Convert List of Post to List of PostDto
-        List<PostDto> postDtos = posts.stream()
+        List<PostDto> content = listOfPosts.stream()
                 .map(post -> mapEntityToDto(post))
                 .collect(Collectors.toList());
 
-        return postDtos;
+        PostResponse postResponse = PostResponse.builder()
+                .content(content)
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .totalElements(posts.getTotalElements())
+                .totalPages(posts.getTotalPages())
+                .last(posts.isLast())
+                .build();
+
+        return postResponse;
     }
 
     @Override
