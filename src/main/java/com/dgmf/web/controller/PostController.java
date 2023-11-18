@@ -1,6 +1,7 @@
 package com.dgmf.web.controller;
 
 import com.dgmf.service.PostService;
+import com.dgmf.utils.AppConstants;
 import com.dgmf.web.dto.PostDto;
 import com.dgmf.web.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,22 +34,22 @@ public class PostController {
     public PostResponse getAllPosts(
             @RequestParam(
                     value = "pageNo",
-                    defaultValue = "0",
+                    defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,
                     required = false
             ) int pageNo,
             @RequestParam(
                     value = "pageSize",
-                    defaultValue = "10",
+                    defaultValue = AppConstants.DEFAULT_PAGE_SIZE,
                     required = false
             ) int pageSize,
             @RequestParam(
                     value = "sortBy",
-                    defaultValue = "id",
+                    defaultValue = AppConstants.DEFAULT_SORT_BY,
                     required = false
             ) String sortBy,
             @RequestParam(
                     value = "sortDir",
-                    defaultValue = "asc",
+                    defaultValue = AppConstants.DEFAULT_SORT_DIRECTION,
                     required = false
             ) String sortDir
     ) {
