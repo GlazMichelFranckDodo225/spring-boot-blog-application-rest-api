@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 @Entity
@@ -47,4 +49,6 @@ public class Post {
     // Hibernate will automatically take the current Timestamp of the JVM
     @UpdateTimestamp
     private LocalDateTime lastUpdate;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments = new HashSet<>();
 }
