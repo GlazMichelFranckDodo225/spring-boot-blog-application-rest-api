@@ -10,6 +10,9 @@ import com.dgmf.web.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -37,6 +40,18 @@ public class CommentServiceImpl implements CommentService {
 
 
         return returnedCommentDto;
+    }
+
+    @Override
+    public List<CommentDto> getCommentsByPostId(Long postId) {
+        // Retrieved Comments By Post Id
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        // Convert a List of Comments into a List of CommentDtos
+        List<CommentDto> commentDtos = comments.stream()
+                .map(comment -> mapToDto(comment))
+                .collect(Collectors.toList());
+
+        return commentDtos;
     }
 
     private CommentDto mapToDto(Comment comment) {

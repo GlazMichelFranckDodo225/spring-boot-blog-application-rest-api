@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/posts")
@@ -23,5 +25,12 @@ public class CommentController {
                commentService.createComment(postId, commentDto),
                HttpStatus.CREATED
        );
+    }
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<List<CommentDto>> getCommentsByPostId(
+            @PathVariable("postId") Long postId
+    ) {
+        return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
     }
 }
