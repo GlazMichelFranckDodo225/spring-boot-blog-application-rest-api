@@ -2,12 +2,14 @@ package com.dgmf.service.impl;
 
 import com.dgmf.entity.Comment;
 import com.dgmf.entity.Post;
+import com.dgmf.exception.BlogAPIException;
 import com.dgmf.exception.ResourceNotFoundException;
 import com.dgmf.repository.CommentRepository;
 import com.dgmf.repository.PostRepository;
 import com.dgmf.service.CommentService;
 import com.dgmf.web.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +54,31 @@ public class CommentServiceImpl implements CommentService {
                 .collect(Collectors.toList());
 
         return commentDtos;
+    }
+
+    @Override
+    public CommentDto getCommentById(Long postId, Long commentId) {
+        // Retrieve Post Entity by Id
+        Post post = postRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotFoundException("Post", "id", postId)
+        );
+
+        // Retrieved Comment By Id
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("Comment", "id", commentId)
+        );
+
+        // If Comment doesn't belong to Post
+        if(!comment.getPost().getId().equals(post.getId())) {
+            throw new BlogAPIException(
+                    HttpStatus.BAD_REQUEST,
+                    "Comment doesn't belong to Post"
+            );
+        }
+
+        CommentDto commentDto = mapToDto(comment);
+
+        return commentDto;
     }
 
     private CommentDto mapToDto(Comment comment) {
