@@ -7,6 +7,7 @@ import com.dgmf.service.PostService;
 import com.dgmf.web.dto.PostDto;
 import com.dgmf.web.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
 
     /*@Autowired // Constructor-based Dependency Injection
     public PostServiceImpl(PostRepository postRepository) {
