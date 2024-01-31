@@ -9,6 +9,7 @@ import com.dgmf.repository.PostRepository;
 import com.dgmf.service.CommentService;
 import com.dgmf.web.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public CommentDto createComment(Long postId, CommentDto commentDto) {
@@ -142,23 +144,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private CommentDto mapToDto(Comment comment) {
-        CommentDto commentDto = CommentDto.builder()
+        /*CommentDto commentDto = CommentDto.builder()
                 .id(comment.getId())
                 .name(comment.getName())
                 .email(comment.getEmail())
                 .body(comment.getBody())
-                .build();
+                .build();*/
+
+        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
 
         return commentDto;
     }
 
     private Comment mapToEntity(CommentDto commentDto) {
-        Comment comment = Comment.builder()
+        /*Comment comment = Comment.builder()
                 .id(commentDto.getId())
                 .name(commentDto.getName())
                 .email(commentDto.getEmail())
                 .body(commentDto.getBody())
-                .build();
+                .build();*/
+
+        Comment comment = modelMapper.map(commentDto, Comment.class);
 
         return comment;
     }

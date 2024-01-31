@@ -31,15 +31,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto createPost(PostDto postDto) {
         // Convert PostDto to Post
-        // Post post = mapDtoToEntity(postDto);
-        Post post = modelMapper.map(postDto, Post.class);
+        Post post = mapDtoToEntity(postDto);
 
         // Save Post
         Post savedPost = postRepository.save(post);
 
         // Convert savedPost to PostDto
-        // PostDto savedPostDto = mapEntityToDto(savedPost);
-        PostDto savedPostDto = modelMapper.map(savedPost, PostDto.class);
+        PostDto savedPostDto = mapEntityToDto(savedPost);
 
         return savedPostDto;
     }
@@ -65,11 +63,8 @@ public class PostServiceImpl implements PostService {
         List<Post> listOfPosts = posts.getContent();
 
         // Convert List of Post to List of PostDto
-        /*List<PostDto> content = listOfPosts.stream()
-                .map(post -> mapEntityToDto(post))
-                .collect(Collectors.toList());*/
         List<PostDto> content = listOfPosts.stream()
-                .map(post -> modelMapper.map(post, PostDto.class))
+                .map(post -> mapEntityToDto(post))
                 .collect(Collectors.toList());
 
         PostResponse postResponse = PostResponse.builder()
@@ -97,8 +92,7 @@ public class PostServiceImpl implements PostService {
                         )
                 );
 
-        // PostDto postDto = mapEntityToDto(post);
-        PostDto postDto = modelMapper.map(post, PostDto.class);
+        PostDto postDto = mapEntityToDto(post);
 
         return postDto;
     }
@@ -122,7 +116,7 @@ public class PostServiceImpl implements PostService {
 
         Post updatedPost = postRepository.save(existingPost);
 
-        return modelMapper.map(updatedPost, PostDto.class);
+        return mapEntityToDto(updatedPost);
     }
 
     @Override
@@ -141,26 +135,30 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
-    /*private PostDto mapEntityToDto(Post post) {
+    private PostDto mapEntityToDto(Post post) {
         // Convert Post into PostDto
-        PostDto postDto = PostDto.builder()
+        /*PostDto postDto = PostDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .content(post.getContent())
-                .build();
+                .build();*/
+
+        PostDto postDto = modelMapper.map(post, PostDto.class);
 
         return postDto;
-    }*/
+    }
 
-    /*private Post mapDtoToEntity(PostDto postDto) {
+    private Post mapDtoToEntity(PostDto postDto) {
         // Convert PostDto to Post
-        Post post = Post.builder()
+        /*Post post = Post.builder()
                 .title(postDto.getTitle())
                 .description(postDto.getDescription())
                 .content(postDto.getContent())
-                .build();
+                .build();*/
+
+        Post post = modelMapper.map(postDto, Post.class);
 
         return post;
-    }*/
+    }
 }
