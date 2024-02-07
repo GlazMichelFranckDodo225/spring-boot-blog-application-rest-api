@@ -45,4 +45,23 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    // Global Exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(
+            Exception exception,
+            WebRequest webRequest // To Send Back Details to the Client
+    ) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .timestamp(new Date())
+                .message(exception.getMessage())
+                // False ==> To Send Back Only the URI instead of the
+                // Full Description
+                .details(webRequest.getDescription(false))
+                .build();
+
+        return new ResponseEntity<>(
+                errorDetails, HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
 }
