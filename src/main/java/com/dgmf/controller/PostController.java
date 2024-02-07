@@ -1,16 +1,13 @@
-package com.dgmf.web.controller;
+package com.dgmf.controller;
 
 import com.dgmf.service.PostService;
 import com.dgmf.utils.AppConstants;
-import com.dgmf.web.dto.PostDto;
-import com.dgmf.web.dto.PostResponse;
+import com.dgmf.dto.PostDto;
+import com.dgmf.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")

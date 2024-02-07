@@ -7,7 +7,7 @@ import com.dgmf.exception.ResourceNotFoundException;
 import com.dgmf.repository.CommentRepository;
 import com.dgmf.repository.PostRepository;
 import com.dgmf.service.CommentService;
-import com.dgmf.web.dto.CommentDto;
+import com.dgmf.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;

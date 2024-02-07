@@ -1,8 +1,6 @@
 package com.dgmf.service;
 
-import com.dgmf.entity.Comment;
-import com.dgmf.entity.Post;
-import com.dgmf.web.dto.CommentDto;
+import com.dgmf.dto.CommentDto;
 
 import java.util.List;
 

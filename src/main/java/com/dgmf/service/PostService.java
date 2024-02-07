@@ -1,10 +1,7 @@
 package com.dgmf.service;
 
-import com.dgmf.entity.Post;
-import com.dgmf.web.dto.PostDto;
-import com.dgmf.web.dto.PostResponse;
-
-import java.util.List;
+import com.dgmf.dto.PostDto;
+import com.dgmf.dto.PostResponse;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);

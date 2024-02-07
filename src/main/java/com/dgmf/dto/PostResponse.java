@@ -1,4 +1,4 @@
-package com.dgmf.web.dto;
+package com.dgmf.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

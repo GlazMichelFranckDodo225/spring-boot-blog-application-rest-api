@@ -1,10 +1,9 @@
-package com.dgmf.web.controller;
+package com.dgmf.controller;
 
 import com.dgmf.service.CommentService;
-import com.dgmf.web.dto.CommentDto;
+import com.dgmf.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
