@@ -2,6 +2,7 @@ package com.dgmf.controller;
 
 import com.dgmf.service.CommentService;
 import com.dgmf.dto.CommentDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class CommentController {
     @PostMapping("/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(
             @PathVariable("postId") Long postId,
-            @RequestBody CommentDto commentDto
+            @Valid @RequestBody CommentDto commentDto
     ) {
        return new ResponseEntity<>(
                commentService.createComment(postId, commentDto),
@@ -50,7 +51,7 @@ public class CommentController {
     public ResponseEntity<CommentDto> updateComment(
             @PathVariable("postId") Long postId,
             @PathVariable("commentId") Long commentId,
-            @RequestBody CommentDto commentDto
+            @Valid @RequestBody CommentDto commentDto
     ) {
         return ResponseEntity.ok(commentService.updateComment(
                 postId, commentId, commentDto
