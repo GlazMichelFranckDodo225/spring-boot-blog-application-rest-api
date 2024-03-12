@@ -2,7 +2,9 @@ package com.dgmf.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -14,15 +16,23 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration // Java-Based Configuration
+@EnableMethodSecurity // Method Level Security
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
             throws Exception {
         // To Enable Http Basic Authentication
         httpSecurity.csrf(AbstractHttpConfigurer::disable) // Disable CSRF
-                // Any Http Incoming Requests Should Be Authenticated
-                .authorizeHttpRequests(
-                        authorize -> authorize.anyRequest().authenticated())
+                .authorizeHttpRequests(authorize ->
+                        // Any Http Incoming Requests Should Be Authenticated
+                        // authorize.anyRequest().authenticated()
+                        authorize.requestMatchers(
+                                // All GET Requests Are Authorized on the Url
+                                HttpMethod.GET, "/api/v1/**")
+                                .permitAll()
+                                // All Other Requests Must Be Authenticated
+                                .anyRequest().authenticated()
+                    )
                 .httpBasic(Customizer.withDefaults());
 
         // Returns DefaultSecurityFilterChain (Implementation Class of

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class PostController {
     private final PostService postService;
 
     // Create Post REST API
+    @PreAuthorize("hasRole('ADMIN')") // Only Admin Can Access
     @PostMapping
     public ResponseEntity<PostDto> createPost(
             @Valid @RequestBody PostDto postDto
@@ -64,6 +66,7 @@ public class PostController {
     }
 
     // Update Post By Id REST API
+    @PreAuthorize("hasRole('ADMIN')") // Only Admin Can Access
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(
             @Valid @RequestBody PostDto postDto,
@@ -73,6 +76,7 @@ public class PostController {
     }
 
     // Delete Post By Id REST API
+    @PreAuthorize("hasRole('ADMIN')") // Only Admin Can Access
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePostById(
             @PathVariable("id") Long postId) {
