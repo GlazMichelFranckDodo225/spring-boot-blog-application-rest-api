@@ -1,9 +1,12 @@
 package com.dgmf.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,7 +20,23 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration // Java-Based Configuration
 @EnableMethodSecurity // Method Level Security
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final UserDetailsService userDetailsService;
+
+    // To Encode Passwords
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
             throws Exception {
@@ -40,15 +59,9 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
-    // To Encode Passwords
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     // Few Users Stored Into a In-Memory Object (InMemoryUserDetailsManager
     // Instance)
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService() {
         UserDetails johnDoe = User.builder()
                 .username("johnDoe")
@@ -63,5 +76,5 @@ public class SecurityConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(johnDoe, admin);
-    }
+    }*/
 }
