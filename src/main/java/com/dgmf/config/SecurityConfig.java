@@ -42,17 +42,17 @@ public class SecurityConfig {
             throws Exception {
         // To Enable Http Basic Authentication
         httpSecurity.csrf(AbstractHttpConfigurer::disable) // Disable CSRF
-                .authorizeHttpRequests(authorize ->
-                        // Any Http Incoming Requests Should Be Authenticated
-                        // authorize.anyRequest().authenticated()
-                        authorize.requestMatchers(
-                                // All GET Requests Are Authorized on the Url
-                                HttpMethod.GET, "/api/v1/**")
-                                .permitAll()
-                                // All Other Requests Must Be Authenticated
-                                .anyRequest().authenticated()
+            .authorizeHttpRequests(authorize ->
+                    // Any Http Incoming Requests Should Be Authenticated
+                    // authorize.anyRequest().authenticated()
+                    // All GET Requests Are Authorized on the Url
+                    authorize
+                            .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                            // All Other Requests Must Be Authenticated
+                            .anyRequest().authenticated()
                     )
-                .httpBasic(Customizer.withDefaults());
+            .httpBasic(Customizer.withDefaults());
 
         // Returns DefaultSecurityFilterChain (Implementation Class of
         // SecurityFilterChain Interface)

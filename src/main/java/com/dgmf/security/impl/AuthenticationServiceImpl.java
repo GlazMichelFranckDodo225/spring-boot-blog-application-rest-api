@@ -16,6 +16,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String login(LoginDto loginDto) {
+        // To Authenticate User with UsernameOrEmail and Password
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getUsernameOrEmail(), loginDto.getPassword()
