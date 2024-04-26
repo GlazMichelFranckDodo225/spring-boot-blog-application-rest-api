@@ -9,14 +9,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 // Spring Security Will Use this Class to Load the User Object from
 // the DB in Order to Make DB Authentication
-@Service
+@Component
 @RequiredArgsConstructor
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService, UserDetailsService {
     private final UserRepository userRepository;
