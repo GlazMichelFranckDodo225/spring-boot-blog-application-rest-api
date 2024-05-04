@@ -5,7 +5,7 @@ import com.dgmf.entity.Post;
 import com.dgmf.repository.PostRepository;
 import com.dgmf.service.PostService;
 import com.dgmf.dto.PostDto;
-import com.dgmf.dto.PostResponse;
+import com.dgmf.dto.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPosts(
+    public PostResponseDto getAllPosts(
             int pageNo, int pageSize, String sortBy, String sortDir
     ) {
         // Create a Sort Object
@@ -67,7 +67,7 @@ public class PostServiceImpl implements PostService {
                 .map(post -> mapEntityToDto(post))
                 .collect(Collectors.toList());
 
-        PostResponse postResponse = PostResponse.builder()
+        PostResponseDto postResponse = PostResponseDto.builder()
                 .content(content)
                 .pageNo(pageNo)
                 .pageSize(pageSize)

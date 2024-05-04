@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class PostResponse {
+public class PostResponseDto {
     private List<PostDto> content;
     private int pageNo;
     private int pageSize;

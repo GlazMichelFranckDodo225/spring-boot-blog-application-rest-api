@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-// To Authenticate JWT Token Before Spring Security Filter Chain
+// To Validate JWT Token Before Spring Security Filter Chain Execution
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilterServiceImpl

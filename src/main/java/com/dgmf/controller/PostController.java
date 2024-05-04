@@ -3,7 +3,7 @@ package com.dgmf.controller;
 import com.dgmf.service.PostService;
 import com.dgmf.utils.AppConstants;
 import com.dgmf.dto.PostDto;
-import com.dgmf.dto.PostResponse;
+import com.dgmf.dto.PostResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class PostController {
 
     // Get All Posts REST API
     @GetMapping
-    public PostResponse getAllPosts(
+    public PostResponseDto getAllPosts(
             @RequestParam(
                     value = "pageNo",
                     defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,

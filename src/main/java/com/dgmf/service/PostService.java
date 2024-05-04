@@ -1,11 +1,11 @@
 package com.dgmf.service;
 
 import com.dgmf.dto.PostDto;
-import com.dgmf.dto.PostResponse;
+import com.dgmf.dto.PostResponseDto;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);
-    PostResponse getAllPosts(
+    PostResponseDto getAllPosts(
             int pageNo, int pageSize, String sortBy, String sortDir
     );
 
