@@ -1,23 +1,29 @@
 package com.dgmf.exception;
 
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-// We throw this Exception whenever we write some
-// Business Logic or Validate Request Parameters
-@Data
 public class BlogAPIException extends RuntimeException {
-    private HttpStatus httpStatus;
+
+    private HttpStatus status;
     private String message;
 
-    public BlogAPIException(HttpStatus httpStatus, String message) {
-        this.httpStatus = httpStatus;
+    public BlogAPIException(HttpStatus status, String message) {
+        this.status = status;
         this.message = message;
     }
 
-    public BlogAPIException(String message, HttpStatus httpStatus, String message1) {
+    public BlogAPIException(String message, HttpStatus status, String message1) {
         super(message);
-        this.httpStatus = httpStatus;
+        this.status = status;
         this.message = message1;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

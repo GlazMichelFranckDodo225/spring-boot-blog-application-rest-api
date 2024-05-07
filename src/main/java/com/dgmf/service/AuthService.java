@@ -1,9 +1,10 @@
-package com.dgmf.security;
+package com.dgmf.service;
 
 import com.dgmf.dto.LoginDto;
 import com.dgmf.dto.RegisterDto;
 
-public interface AuthenticationService {
+public interface AuthService {
     String login(LoginDto loginDto);
+
     String register(RegisterDto registerDto);
 }
