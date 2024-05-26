@@ -33,7 +33,7 @@ public class Post {
             orphanRemoval = true
     )
     private Set<Comment> comments = new HashSet<>();
-    // OneToMany Bidirectional Relationship Between Post and
+    // OneToMany Unidirectional Relationship Between Post and
     // Category Entities (Parent ==> Category / Post ==> Child)
     @ManyToOne(fetch = FetchType.LAZY) // Fetch Category on Demand (Not
     // immediately) by Calling the Related Getter
